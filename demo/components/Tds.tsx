@@ -38,7 +38,7 @@ const styles = {
     }
 };
 
-const Tds = ({ id, value, title }) => {
+const Tds = ({ value, title }:any) => {
     return (
         <div style={styles.dial}>
             <Chart

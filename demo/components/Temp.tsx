@@ -79,7 +79,7 @@ function valuetext(value: number) {
     return `${value}°C`;
 }
 
-export default function Temp({ value }) {
+export default function Temp({ value }:any) {
     function preventHorizontalKeyboardNavigation(event: React.KeyboardEvent) {
         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
             event.preventDefault();

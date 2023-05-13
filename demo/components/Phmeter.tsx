@@ -1,5 +1,5 @@
 import React from "react";
-import ReactSpeedometer from "react-d3-speedometer"
+import ReactSpeedometer, { Transition } from "react-d3-speedometer"
 
 const styles = {
     dial: {
@@ -16,7 +16,7 @@ const styles = {
     }
 };
 
-const Phmeter = ({ id, value, title }) => {
+const Phmeter = ({ id, value, title }:any) => {
     return (
         <div style={styles.dial}>
             <ReactSpeedometer
@@ -25,7 +25,7 @@ const Phmeter = ({ id, value, title }) => {
                 height={280}
                 width={290}
                 value={value}
-                needleTransition="easeQuadIn"
+                needleTransition={Transition.easeQuadInOut}
                 needleTransitionDuration={1000}
                 needleColor="red"
                 startColor="green"

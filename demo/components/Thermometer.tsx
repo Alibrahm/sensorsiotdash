@@ -1,4 +1,5 @@
 import React from "react";
+//@ts-ignore
 import Thermometer from "react-thermometer-chart";
 
 export default function ThermometerThree(temperature: any) {
