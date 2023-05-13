@@ -55,7 +55,7 @@ const Dashboard = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const [humidity, setHumidity] = useState()
     const [sensorData, setSensorData] = useState([]);
-    const [currentDevice, setCurrentDevice] = useState({ description: "", temperature: "", });
+    const [currentDevice, setCurrentDevice] = useState({ description: "", temperature: "", location:"" });
     useEffect(() => {
         const intervalId = setInterval(() => {
             axios.get('https://watersensorsapi.herokuapp.com/api/sensors')

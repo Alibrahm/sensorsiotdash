@@ -12,7 +12,20 @@ const gaugeBarRadius = 10;
 
 const lowBattery = 25;
 
-const styles = {
+interface Styles {
+    container: React.CSSProperties;
+    barsContainer: React.CSSProperties;
+    barContainer: React.CSSProperties;
+    bar: React.CSSProperties;
+    barFirst: React.CSSProperties;
+    barLast: React.CSSProperties;
+    barRed: React.CSSProperties;
+    bg: React.CSSProperties;
+    barText: React.CSSProperties;
+    red: React.CSSProperties;
+    green: React.CSSProperties;
+}
+const styles: Styles = {
     container: {
         position: "relative",
         width: `${gaugeWidth}px`,
@@ -68,7 +81,7 @@ const styles = {
     }
 };
 
-const Battery = ({ percentage }) => {
+const Battery = ({ percentage }:any) => {
     // const gaugeBarsNb = 10;
     const percent10 = Math.round(percentage / gaugeBarsNb);
     const arrayLength = Math.min(percent10, gaugeBarsNb);
