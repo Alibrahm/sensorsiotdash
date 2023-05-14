@@ -10,15 +10,16 @@ const Separator = styled('div')(
 `,
 );
 const PrettoSlider = styled(Slider)({
-    color: '#52af77',
+    color: '#5f662',
     height: 12,
     '& .MuiSlider-track': {
-        border: 'none',
+        border: 'black',
+        backgroundColor: 'red',
     },
     '& .MuiSlider-thumb': {
         height: 24,
         width: 24,
-        backgroundColor: '#fff',
+        backgroundColor: 'red',
         border: '2px solid currentColor',
         '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
             boxShadow: 'inherit',
@@ -35,7 +36,7 @@ const PrettoSlider = styled(Slider)({
         width: 32,
         height: 32,
         borderRadius: '50% 50% 50% 0',
-        backgroundColor: '#52af77',
+        backgroundColor: 'red',
         transformOrigin: 'bottom left',
         transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
         '&:before': { display: 'none' },
@@ -107,9 +108,10 @@ export default function Temp({ value }:any) {
             /> */}
             <PrettoSlider
                 valueLabelDisplay="on"
-                aria-label="pretto slider"
+                aria-label="temp slider"
                 value={20}
-                
+                marks={marks}
+                sx={{ height: 20 }}
             />
             {/* <Separator /> */}
         </Box>
