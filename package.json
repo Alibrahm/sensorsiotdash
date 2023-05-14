@@ -1,5 +1,5 @@
 {
-    "name": "sakai-react-typescript",
+    "name": "iotdashboard-react-typescript",
     "version": "9.1.2",
     "private": false,
     "scripts": {
@@ -28,7 +28,7 @@
         "primeicons": "^6.0.1",
         "primereact": "9.2.3",
         "react": "18.2.0",
-        "react-d3-speedometer": "^1.1.0",
+        "react-d3-speedometer": "^2.1.0-rc.0",
         "react-dom": "18.2.0",
         "react-google-charts": "^4.0.0",
         "react-leaflet": "^4.2.1",
