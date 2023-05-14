@@ -106,9 +106,10 @@ export default function Temp({ value }:any) {
                 marks={marks}
             /> */}
             <PrettoSlider
-                valueLabelDisplay="auto"
+                valueLabelDisplay="on"
                 aria-label="pretto slider"
                 value={20}
+                
             />
             {/* <Separator /> */}
         </Box>
