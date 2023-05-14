@@ -16,7 +16,7 @@ import Temp from '../demo/components/Temp';
 import { ChartData, ChartOptions } from 'chart.js';
 import Tds from '../demo/components/Tds';
 import Devicelocation from '../demo/components/Devicelocation';
-import Thermometer from '../demo/components/Thermometer';
+// import Thermometer from '../demo/components/Thermometer';
 import Switch from '../demo/components/Switch';
 import axios from 'axios';
 
@@ -251,7 +251,7 @@ const Dashboard = () => {
                         </div>
                         <div className=' border-4 border-indigo-600 border-x flex-col'>
                             <span className='font-semibold text-base'>Fluid Temp</span>
-                            <Thermometer temperature={currentDevice.temperature} />
+                            {/* <Thermometer temperature={currentDevice.temperature} /> */}
                         </div>
                     {/* </div> */}
                 </div>
