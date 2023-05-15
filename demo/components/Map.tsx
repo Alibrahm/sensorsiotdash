@@ -1,8 +1,15 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import { Key, ReactElement, JSXElementConstructor, ReactFragment } from "react";
-
-export default function Map({ center, zoom, style, data, setSelectedCounty, selectedCounty }:any) {
+import L from "leaflet";
+export default function Map({ center, zoom, style, data, setSelectedCounty, selectedCounty }: any) {
+    const icon = L.icon({
+    iconUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/564px-Map_pin_icon.svg.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+});
+    
     return (
         <div style={style}>
             {/* @ts-ignore */}
@@ -22,6 +29,7 @@ export default function Map({ center, zoom, style, data, setSelectedCounty, sele
                                 setSelectedCounty(county);
                             },
                         }}
+                        icon= {icon}
                     >
                         <Popup>{county.name}</Popup>
                     </Marker>
