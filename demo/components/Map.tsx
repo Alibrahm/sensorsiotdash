@@ -5,8 +5,8 @@ import L from "leaflet";
 export default function Map({ center, zoom, style, data, setSelectedCounty, selectedCounty }: any) {
     const icon = L.icon({
     iconUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/564px-Map_pin_icon.svg.png",
-    iconSize: [32, 32],
+        "https://cdn.shopify.com/s/files/1/2129/3747/t/22/assets/pf-6946df78--Location-icon.png?v=1584271085",
+    iconSize: [70, 60],
     iconAnchor: [16, 16],
 });
     

@@ -16,12 +16,20 @@ import Temp from '../demo/components/Temp';
 import { ChartData, ChartOptions } from 'chart.js';
 import Tds from '../demo/components/Tds';
 import Devicelocation from '../demo/components/Devicelocation';
-// import Thermometer from '../demo/components/Thermometer';
+import LiquidFillGauge from '../demo/components/Liquidgauge';
 import Switch from '../demo/components/Switch';
+import Spark from '../demo/components/Sparklines'
+import Phvariance from '../demo/components/Phvariance'
+import CanvasTemp from '../demo/components/CanvasTemp'
 import axios from 'axios';
 
 const DynamicComponentWithNoSSR = dynamic(
     () => import('../demo/components/Phmeter'),
+    { ssr: false }
+);
+
+const DynamicComponentCanvasGauge = dynamic(
+    () => import('../demo/components/CanvasTemp'),
     { ssr: false }
 );
 
@@ -55,7 +63,8 @@ const Dashboard = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const [humidity, setHumidity] = useState()
     const [sensorData, setSensorData] = useState([]);
-    const [currentDevice, setCurrentDevice] = useState({ description: "", temperature: "", location:"" });
+    const [currentDevice, setCurrentDevice] = useState({ description: "", temperature: "", location: "", pH: "" });
+    const [realTimeData, setRealTimeData] = useState([]);
     useEffect(() => {
         const intervalId = setInterval(() => {
             axios.get('https://watersensorsapi.herokuapp.com/api/sensors')
@@ -79,6 +88,7 @@ const Dashboard = () => {
                     console.log(JSON.stringify(response.data));
                     console.log("Current response", response.data);
                     setCurrentDevice(response.data[0]);
+                    // setRealTimeData((prevData) => [...prevData, response.data[0].pH]);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -169,104 +179,83 @@ const Dashboard = () => {
     };
 
     return (
+        
         <div className="grid">
+            
             <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
+                {/* <div className="card mb-0"> */}
+                    <div className="flex h-14">
+                        {/* <div>
                             <span className="block text-500 font-medium mb-3">Devices</span>
-                            <div className="text-900 font-medium text-xl">7</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                            <div className="text-900 font-medium text-xl"></div>
+                        </div> */}
+                        <Tds value={currentDevice.temperature} title=" Nairobi " id={8} />
+                        {/* <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                             <i className="pi-database text-blue-500 text-xl" />
-                        </div>
+                        </div> */}
                     </div>
                     <span className="text-green-500 font-medium">24 new updates </span>
                     <span className="text-500">since last visit</span>
-                </div>
+                {/* </div> */}
             </div>
             <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Remote Sensor Health</span>
-                            <div className="text-900 font-medium text-xl border-4 border-indigo-200 border-x-indigo-500"> Above Average</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-map-marker text-orange-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-red-500 font-medium">2% </span>
-                    <span className="text-500">Failed Updates</span>
-                </div>
+                {/* <div className="card mb-0"> */}
+                    
+                <DynamicComponentCanvasGauge temperature={currentDevice.temperature} />
+                       
+             {/* </div> */}
             </div>
             <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Feature</span>
-                            <div className="text-900 font-medium text-xl">----</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-inbox text-cyan-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-green-500 font-medium">--- </span>
-                    <span className="text-500">newly registered devices</span>
+                <div className="card ">
+                   
+                    <Phvariance />
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-3">
                 <div className="card mb-0 ">
-                    {/* <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Comments</span>
-                            <div className="text-900 font-medium text-xl">152 Unread</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-comment text-purple-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-green-500 font-medium">85 </span>
-                    <span className="text-500">responded</span> */}
-                    <Battery percentage={10} />
-                    <Switch />
-                    
+                    {/* <Battery percentage={currentDevice.temperature} />
+                    <Switch /> */}
+                    <DynamicComponentWithNoSSR id="dial2" value={currentDevice.temperature} title="ph Reading" />
+
                 </div>
             </div>
 
-            {/* <div className='flex flex-row sm:flex-col'>   {sensorData.map((sensor) => (
-                <li key={sensor.id}>
-                    Sensor ID: {sensor.oid}, Power: {sensor.value},temperature:{sensor.temperature},  <DynamicComponentWithNoSSR value={sensor.temperature} title={sensor.location} id={undefined} />
-                </li>
-            ))}</div> */}
-            <div className=" col-12 xl:col-6">
-                {/* <div className="card"> */}
-                    <div className='flex flex-row gap-8'>
-                        <span className='font-[Ubuntu] font-semibold text-xl '>Device current location {currentDevice.location}</span>
-                      </div>
-                    <div className='grid grid-cols-2 gap-4'>
-                        <div className=' border flex-col'>
-                            <span className='font-semibold text-base'></span>
-                            <Tds value={currentDevice.temperature} title=" Nairobi " id={8} />
-                        </div>
-                        <div className=' border-4 border-indigo-600 border-x flex-col'>
-                            <span className='font-semibold text-base'>Fluid Temp</span>
-                            {/* <Thermometer temperature={currentDevice.temperature} /> */}
-                        </div>
-                    {/* </div> */}
+            <div className=" col-12  xl:col-11 rounded-lg mx-9 ">
+                <div className="flex flex-row gap-5">
+                        <Devicelocation />
+                    <div className=' my-auto'><LiquidFillGauge percentage={currentDevice.temperature} /></div>
+                    
+                </div>
+            </div>
+            <div className=" col-12 xl:col-12">
+                <div className="card ">
+                <div className=' flex-row gap-8'>
+                    <span className='font-[Ubuntu] font-semibold text-xl '>Device current location {currentDevice.location}</span>
+                </div>
+                <div className='grid grid-cols-2 gap-4'>
+                    <div className=' border flex-col'>
+                        <span className='font-semibold text-base'></span>
+                        <Tds value={currentDevice.temperature} title=" Nairobi " id={8} />
+                    </div>
+                    <div className=' border-none  flex flex-col'>
+                        {/* <span className='font-semibold text-base'>Fluid Temp</span> */}
+                            <DynamicComponentWithNoSSR id="dial2" value={currentDevice.temperature} title="Speed Y" />
+                    </div>
+                    </div>
+                    
                 </div>
             </div>
 
 
             <div className="col-12 xl:col-6">
-                <div className="card">
-                    <h5>Sensor Location</h5>
-                    <Devicelocation />
-                </div>
-                <div className='w-full'><Devicelocation /></div>
+                {/* <div className="card">
+                    <h5></h5>
+                    <LiquidFillGauge />
+                </div> */}
+                {/* <div className='w-full'><Devicelocation /></div> */}
                 <div className="card">
                     <div className="flex justify-content-between align-items-center mb-5">
-                        <h5>Best Selling Products</h5>
+                        <h5>Temperature  </h5>
                         <div>
                             <Button type="button" icon="pi pi-ellipsis-v" className="p-button-rounded p-button-text p-button-plain" onClick={(event) => menu1.current?.toggle(event)} />
                             <Menu
@@ -279,26 +268,14 @@ const Dashboard = () => {
                             />
                         </div>
                     </div>
-                    <div>
 
-                        <h1>Sensor Data</h1>
-                       
-                        <Temp value={50} />
-                        
-                        {/* <DynamicComponentWithNoSSR value={ 67} title='ingoo'/> */}
-                        {/* <Temp  value={50} title="Lowest Temp" /> */}
-                        {/* <ul>
-                            {sensorData.map((sensor) => (
-                                <li key={sensor.id}>
-                                   Power: {sensor.value},temperature:{sensor.temperature},  <DynamicComponentWithNoSSR value={sensor.temperature} title={sensor.location} id={undefined} />
-                                </li>
-                            ))}
-                        </ul> */}
 
-                    </div>
+                    <h1>Sensor Data</h1>
+                    <Temp value={50} />
+                   
                 </div>
             </div>
-            
+
             {/* <div className='col-12 xl:col-6'>
                 <div className="card">
             <div className=' '>
@@ -306,7 +283,7 @@ const Dashboard = () => {
                 <Tds value={60} title=" Kisumu " id={8} />
                 <Tds value={180} title=" Nairobi" id={9} />
                         <Tds value={180} title=" Mombasa" id={10} />
-                        <Thermometer />
+                        <DynamicComponentCanvasGauge />
                     </div></div></div> */}
             {/* <div className="col-12 xl:col-6">
                 <div className="card">

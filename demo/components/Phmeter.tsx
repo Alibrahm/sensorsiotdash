@@ -1,5 +1,5 @@
 import React from "react";
-import ReactSpeedometer, { Transition } from "react-d3-speedometer"
+import GaugeChart from "react-gauge-chart";
 
 const styles = {
     dial: {
@@ -16,25 +16,23 @@ const styles = {
     }
 };
 
-const Phmeter = ({ id, value, title }:any) => {
+const Dial = ({ id, value, title }:any) => {
+    let percent = value ;
+
     return (
         <div style={styles.dial}>
-            <ReactSpeedometer
-                maxValue={120}
-                minValue={-10}
-                height={280}
-                width={290}
-                value={value}
-                needleTransition={Transition.easeQuadInOut}
-                needleTransitionDuration={1000}
-                needleColor="red"
-                startColor="green"
-                segments={10}
-                endColor="blue"
+            <GaugeChart
+                id={id}
+                nrOfLevels={30}
+                colors={["#00cccc", "#00ffff", "#ff0000"]}
+                arcWidth={0.5}
+                percent={percent}
+                textColor={"#FFFFFF"}
+                formatTextValue={(value) => value}
             />
             <div style={styles.title}>{title}</div>
         </div>
     );
 };
 
-export default Phmeter;
+export default Dial;

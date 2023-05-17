@@ -12,12 +12,6 @@ export const data = [
     // { name: "Kisumu", position: [-0.1022, 34.7617] },
 ];
 
-// const icon = L.icon({
-//     iconUrl:
-//         "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/564px-Map_pin_icon.svg.png",
-//     iconSize: [32, 32],
-//     iconAnchor: [16, 16],
-// });
 
 const DynamicMap = dynamic(
     () => import("../components/Map"), // path to your Map component
@@ -33,7 +27,7 @@ export default function Devicelocation() {
             <DynamicMap
                 center={[1.2264685, 36.7496256]}
                 zoom={8}
-                style={{ height: "400px", width: "100%" }}
+                style={{ height: "400px", width: "100%",border:'1px solid lightgray',borderRadius:'15px' }}
                 data={data}
                 setSelectedCounty={setSelectedCounty}
                 selectedCounty={selectedCounty}
