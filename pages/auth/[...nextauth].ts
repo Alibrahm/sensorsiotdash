@@ -22,7 +22,9 @@ const options: NextAuthOptions = {
     // },
     callbacks: {
         async signIn({ account, profile }) {
+            {/* @ts-ignore */ }
             if (account.provider === "google") {
+                {/* @ts-ignore */ }
                 return profile.email_verified
             }
             return true // Do different verification for other providers that don't have `email_verified`
