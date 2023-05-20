@@ -2,8 +2,8 @@ import React from "react";
 
 import GaugeBg from "./gauge-bg.png";
 
-const gaugeWidth = 170;
-const gaugeHeight = 50;
+const gaugeWidth = 66;
+const gaugeHeight = 19;
 const gaugeContentWidth = gaugeWidth - 12;
 const gaugeBarsNb = 10;
 const gaugeBarWidth = gaugeContentWidth / gaugeBarsNb;
@@ -109,7 +109,7 @@ const Battery = ({ percentage }:any) => {
                     ))}
                 </div>
             </div>
-            <div style={styles.barText}>
+            {/* <div style={styles.barText}>
                  Battery Level -
                 {percentage < lowBattery && (
                     <span style={styles.red}> {percentage}% </span>
@@ -117,7 +117,7 @@ const Battery = ({ percentage }:any) => {
                 {percentage >= lowBattery && (
                     <span style={styles.green}> {percentage}%</span>
                 )}
-            </div>
+            </div> */}
         </>
     );
 };

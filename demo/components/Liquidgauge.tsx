@@ -35,7 +35,7 @@ const Liquidgauge = (percentage: { percentage: any; }) => {
     ];
 
     return (
-        <div>
+        <div style={{ marginInline: '-23px', paddingTop: '79px' }}>
             <LiquidFillGauge
                 style={{ margin: '0 auto' }}
                 width={radius * 2}

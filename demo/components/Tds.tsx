@@ -29,8 +29,9 @@ const styles = {
         width: `auto`,
         height: `auto`,
         color: "#000",
-        border: "0.5px solid #fff",
-        padding: "2px"
+        // border: "0.5px solid #fff",
+        paddingTop: "88px",
+        marginInline:'-48px'
     },
     title: {
         fontSize: "1em",
@@ -38,11 +39,13 @@ const styles = {
     }
 };
 
-const Tds = ({ value, title }:any) => {
+const Tds = ({ value, title }: any) => {
+    const radius = 160;
     return (
         <div style={styles.dial}>
             <Chart
-                height={280}
+                width={radius * 2}
+                height={radius * 2}
                 chartType="Gauge"
                 loader={<div></div>}
                 data={[

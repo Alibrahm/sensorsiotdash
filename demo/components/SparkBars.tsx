@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Sparklines, SparklinesBars, SparklinesLine, SparklinesReferenceLine, SparklinesSpots } from 'react-sparklines';
+import { Sparklines, SparklinesBars, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import axios from 'axios';
 
 const RealTimeDataChart = () => {
-    const [realTimeData, setRealTimeData] = useState([23,25,29]);
+    const [realTimeData, setRealTimeData] = useState([10,24,34,67]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -23,11 +23,11 @@ const RealTimeDataChart = () => {
     }, []);
 
     return (
-        <Sparklines data={realTimeData} style={{ background: "#272727" }} margin={10} height={40}>
+        <Sparklines data={realTimeData}>
             {/* <SparklinesLine color="blue" width={2} style={{ strokeWidth: 3, stroke: "#336aff", fill: "none" }} /> */}
-            <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
-            <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} />
-            <SparklinesReferenceLine type="mean" />
+            {/* <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
+            <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} /> */}
+            <SparklinesBars style={{ stroke: "white", strokeWidth: "1", fill: "#40c0f5" }} />
         </Sparklines>
     );
 };
