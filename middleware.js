@@ -1,4 +1,4 @@
-
+// import { getSession } from 'next-auth/client'
 
 // export default function middleware(req, res, next) {
 //     const session = getSession({ req })

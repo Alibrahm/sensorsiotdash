@@ -10,13 +10,19 @@ import { LayoutContext } from '../../../layout/context/layoutcontext';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { Page } from '../../../types/types';
-
+import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
 const LoginPage: Page = () => {
     const [password, setPassword] = useState('');
     const [checked, setChecked] = useState(false);
     const { layoutConfig } = useContext(LayoutContext);
-
+    const { status } = useSession();
     const router = useRouter();
+    useEffect(() => {
+        if (status === "authenticated") {
+            void router.push("/");
+        }
+    }, [status]);
     const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
 
     return (
@@ -27,7 +33,7 @@ const LoginPage: Page = () => {
                     <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: '53px' }}>
                         <div className="text-center mb-5">
                             <img src="/demo/images/login/avatar.png" alt="Image" height="50" className="mb-3" />
-                            <div className="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>
+                            <div className="text-900 text-3xl font-medium mb-3">Welcome!</div>
                             <span className="text-600 font-medium">Sign in to continue</span>
                         </div>
 
@@ -51,7 +57,10 @@ const LoginPage: Page = () => {
                                     Forgot password?
                                 </a>
                             </div>
-                            <Button label="Sign In" className="w-full p-3 text-xl" onClick={() => router.push('/')}></Button>
+                            <Button label="Sign In" className="w-full p-3 text-xl" onClick={(e) => {
+                                e.preventDefault();
+                                signIn("google")
+                            }}></Button>
                         </div>
                     </div>
                 </div>
@@ -64,7 +73,7 @@ LoginPage.getLayout = function getLayout(page) {
     return (
         <React.Fragment>
             {page}
-            <AppConfig simple />
+            {/* <AppConfig simple /> */}
         </React.Fragment>
     );
 };

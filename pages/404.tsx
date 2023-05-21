@@ -1,9 +1,9 @@
 import React from 'react';
 import NotFound from '../pages/pages/notfound/index';
 import { Page } from '../types/types';
-import LoginPage from './login';
+
 const Custom404: Page = () => {
-    return <LoginPage />;
+    return <NotFound />;
 };
 
 Custom404.getLayout = function getLayout(page) {

@@ -11,6 +11,9 @@ const options: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
+    theme: {
+        colorScheme: "light",
+    },
     pages: {
         signIn: "/login",
     },
