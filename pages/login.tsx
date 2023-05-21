@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+//@ts-ignore
 import JssProvider from "react-jss/lib/JssProvider";
 import { createGenerateClassName } from "@material-ui/core/styles";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -12,13 +13,16 @@ import { Page } from '../types/types';
 const muiBaseTheme = createTheme();
 
 const generateClassName = createGenerateClassName({
+    //@ts-ignore
     dangerouslyUseGlobalCSS: true
 }) as () => string;
 
 const theme = createTheme({
     typography: {
+        //@ts-ignore
         useNextVariants: true
     },
+    //@ts-ignore
     overrides: LoginPage.getTheme(muiBaseTheme)
 });
 
