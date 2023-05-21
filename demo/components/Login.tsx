@@ -65,12 +65,11 @@ const Login = () => {
                         <Typography variant={"h3"} className={"DL01-brand"} gutterBottom>
                             WaterQ
                         </Typography>
-                        <Typography>Feel the power inside you.</Typography>
+                        <Typography>Revitalizing Our World, One Drop at a Time.</Typography>
                         <br />
-                        <Typography className={"DL01-description"}>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry.
-                        </Typography>
+                        {/* <Typography className={"DL01-description"}>
+                            Revitalizing Our World, One Drop at a Time
+                        </Typography> */}
                     </div>
                 </Grid>
             </Hidden>
@@ -90,11 +89,11 @@ const Login = () => {
                         alt={"logo"}
                         className={"DL01-logo"}
                         src={
-                            "https://images.vexels.com/media/users/3/144356/isolated/preview/52fb168f1bd3abf7e97a8e9bfdac331d-speed-car-logo-by-vexels.png"
+                            "https://png.pngtree.com/png-clipart/20200710/original/pngtree-water-logo-png-image_4135465.jpg"
                         }
                     />
                     <Typography color={"textSecondary"}>
-                        We provide the best tool
+                        For the best water quality 
                     </Typography>
                     <TextField
                         fullWidth
