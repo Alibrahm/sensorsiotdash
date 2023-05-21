@@ -132,12 +132,26 @@ const Login = () => {
                         // variant={"contained"}
                         // color={"primary"}
                         >
-                            Sign in with Google
+                            Sign in 
                         </Button>
+                        
+                       
                     </FormControl>
-                    <Typography className={"DL01-signUp"}>
+                    <Button
+                        type={"button"}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            signIn("google")
+                        }}
+                    // fullWidth
+                    variant={"contained"}
+                    color={"primary"}
+                    >
+                        or  Sign in with Google
+                    </Button>
+                    {/* <Typography className={"DL01-signUp"}>
                         Don't have an account ? <Link>Sign Up Now</Link>
-                    </Typography>
+                    </Typography> */}
                 </form>
             </Grid>
         </Grid>
