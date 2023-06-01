@@ -12,7 +12,7 @@ const RealTimeDataChart = () => {
                 .then((response) => {
                     const temperatureData = response.data[0].temperature;
                     //@ts-ignore
-                    setRealTimeData((prevData) => [...prevData, response.data[0].temperature]);
+                    setRealTimeData((prevData) => [...prevData, response.data[0].turbidity]);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -24,10 +24,8 @@ const RealTimeDataChart = () => {
 
     return (
         <Sparklines data={realTimeData}>
-            {/* <SparklinesLine color="blue" width={2} style={{ strokeWidth: 3, stroke: "#336aff", fill: "none" }} /> */}
-            {/* <SparklinesBars style={{ fill: "#41c3f9", fillOpacity: ".25" }} />
-            <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} /> */}
-            <SparklinesBars style={{ stroke: "white", strokeWidth: "1", fill: "#40c0f5" }} />
+            <text x={70} y={12} style={{ fill: 'black' }}>Turbidity</text>
+            <SparklinesBars style={{ stroke: 'white', fill: '#40c0f5' }} />
         </Sparklines>
     );
 };
