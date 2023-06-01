@@ -19,9 +19,12 @@ import Devicelocation from '../demo/components/Devicelocation';
 import LiquidFillGauge from '../demo/components/Liquidgauge';
 import Switch from '../demo/components/Switch';
 import Spark from '../demo/components/Sparklines'
+import Loading from '../demo/components/LoadingHive'
 import Phvariance from '../demo/components/Phvariance'
 import Bars from '../demo/components/SparkBars'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useSession, signOut } from 'next-auth/react'
 const DynamicComponentWithNoSSR = dynamic(
     () => import('../demo/components/Phmeter'),
@@ -63,9 +66,38 @@ const Dashboard = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const [humidity, setHumidity] = useState()
     const [sensorData, setSensorData] = useState([]);
-    const [currentDevice, setCurrentDevice] = useState({ description: "", temperature: "", location: "", pH: "" });
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [currentDevice, setCurrentDevice] = useState({ description: "", temperature: "", location: "", pH: "", waterlevel:"" });
     const [realTimeData, setRealTimeData] = useState([]);
     const { data } = useSession();
+    const [deviceEnabled, setDeviceEnabled] = useState(true);
+    const [location, setLocation] = useState(null);
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const notify = () => toast("Alert threshold surpassed!");
+    useEffect(() => {
+        async function fetchLocation() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                if (response.ok) {
+                    const data = await response.json();
+                    setLocation(data);
+
+                    console.log("Geo position target latitude", data.latitude)
+                    console.log("Geo position target longitude", data.longitude)
+                    setLatitude(data.latitude)
+                    setLongitude(data.longitude)
+                } else {
+                    // Handle error
+                }
+            } catch (error) {
+                // Handle error
+            }
+        }
+
+        fetchLocation();
+    }, []);
+
     console.log("dataaa",data)
     const logout = () => {
         signOut()
@@ -75,6 +107,7 @@ const Dashboard = () => {
         const intervalId = setInterval(() => {
             axios.get('https://watersensorsapi.herokuapp.com/api/sensors')
                 .then((response) => {
+                   
                     console.log(JSON.stringify(response.data));
                     console.log("Sensors response", response.data);
                     setSensorData(response.data);
@@ -91,9 +124,11 @@ const Dashboard = () => {
         const intervalId = setInterval(() => {
             axios.get('https://watersensorsapi.herokuapp.com//api/sensors?sensor_id=collection3')
                 .then((response) => {
+                    setIsLoaded(true)
                     console.log(JSON.stringify(response.data));
-                    console.log("Current response", response.data);
+                    console.log("Current response from device", response.data);
                     setCurrentDevice(response.data[0]);
+                    setDeviceEnabled(response.data[0].enabled) //check if device enabled
                     // setRealTimeData((prevData) => [...prevData, response.data[0].pH]);
                 })
                 .catch((error) => {
@@ -103,6 +138,24 @@ const Dashboard = () => {
 
         return () => clearInterval(intervalId);
     }, []);
+
+    const [turned, setTurned] = useState(false);
+ 
+    
+    // useEffect(() => {
+    //     if (!turned) {
+    //         setTimeout(() => {
+    //             setTurned(true);
+    //         }, 60000); // 60 seconds (in milliseconds)
+    //     }
+    // }, [deviceEnabled]);
+
+    useEffect(() => {
+        if (deviceEnabled) {
+            toast.success('Device Status changed', { autoClose: 60000 }); // Show toast for 60 seconds
+        }
+    }, [deviceEnabled]);
+    
 
     const applyLightTheme = () => {
         const lineOptions: ChartOptions = {
@@ -203,7 +256,8 @@ const Dashboard = () => {
                     
                     <div className="col-12 lg:col-6 xl:col-3">
                         <div className="card ">
-                            <Battery percentage={10} />
+                            <div style={{ transform: 'rotate(-90deg)' }}>
+                            <Battery percentage={50} /></div>
                         </div>
                     </div>
 
@@ -213,14 +267,27 @@ const Dashboard = () => {
             </div>
 
             <div className=" col-12  xl:col-12 rounded-lg mx-12 ">
-                <div className=" flex flex-row gap-5">
-                <div className=' flex flex-row  -mt-6 border-none mx-3 '>
-                    <Tds value={currentDevice.temperature} title=" Nairobi " id={8} />
-                    <DynamicComponentCanvasGauge temperature={currentDevice.temperature} />
-                    <LiquidFillGauge percentage={currentDevice.temperature} />
-                </div>
-               <Devicelocation />
-              </div>
+              
+                <div className="grid grid-flow-row auto-rows-max">
+                    {isLoaded ? <>
+                    <div className='   -mt-6 border-none mx-auto '>
+                            <div className='flex flex-row'>
+                                {deviceEnabled && (
+                                    <ToastContainer />
+                                )}
+                                {/* @ts-ignore */}
+                            <Tds value={currentDevice.TDS} title=" TDS " id={8} /><DynamicComponentCanvasGauge temperature={currentDevice.temperature} /><LiquidFillGauge percentage={currentDevice.waterlevel} />
+                           </div>
+                      
+                        </div> 
+                        <Devicelocation latitude={latitude}
+                            longitude={longitude} />
+                    </> :
+                        <div className='   -mt-6 border-none mx-auto '><Loading />
+                        </div>}
+                    </div>
+                   
+             
             </div>
            
 

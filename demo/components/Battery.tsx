@@ -2,8 +2,8 @@ import React from "react";
 
 import GaugeBg from "./gauge-bg.png";
 
-const gaugeWidth = 66;
-const gaugeHeight = 19;
+const gaugeWidth = 126;
+const gaugeHeight = 49;
 const gaugeContentWidth = gaugeWidth - 12;
 const gaugeBarsNb = 10;
 const gaugeBarWidth = gaugeContentWidth / gaugeBarsNb;
