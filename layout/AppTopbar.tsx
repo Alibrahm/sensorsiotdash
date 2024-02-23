@@ -46,10 +46,10 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                 </button>
                 <div ref={topbarmenuRef} className=" text-xl mt-2 " >
                     {/* @ts-ignore */}
-                    <i className="pi pi-user text-base font-['Ubuntu'] whitespace-nowrap"> {data?.user.name}</i>
+                    <i className="pi pi-user text-base whitespace-nowrap"> {data?.user.name}</i>
                   
                 </div>
-                <Link href="/">
+                <Link href="/documentation">
                     <button type="button" className="p-link layout-topbar-button">
                         <i className="pi pi-cog"></i>
                         <span>Settings</span>
@@ -59,9 +59,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                 
                 <button
                     onClick={logout}
-                    style={{
-                        background: '#6366F1', borderRadius: '12px', color:'#ffffff'}}
-                    className=" border-none cursor-pointer  hover:text-[#f54568] text-[#5f6062] bg-slate-700 font-bold py-0 px-4 rounded-full"
+                    className=" border-none cursor-pointer  hover:text-[#f54568] text-[#5f6062] font-bold py-0 px-4 rounded-full"
                 >
                 Logout
                 </button>

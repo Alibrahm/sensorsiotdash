@@ -58,8 +58,8 @@ const Tds = ({ value, title }: any) => {
                     yellowFrom: 50,
                     yellowTo: 90,
                     minorTicks: 5,
-                    min: 0,
-                    max: 'auto'
+                    min: -20,
+                    max: 160
                 }}
             />
         </div>
