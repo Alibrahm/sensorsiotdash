@@ -20,7 +20,8 @@ const SerialReader = () => {
 
   const connectSerial = async () => {
     try {
-      const selectedBaudRate = parseInt(baudRate);
+      const selectedBaudRate = baudRate;
+      //@ts-ignore
       const port = await navigator.serial.requestPort();
       await port.open({ baudRate: selectedBaudRate });
       setPort(port);
@@ -96,6 +97,7 @@ const SerialReader = () => {
 
     const scrollToBottom = () => {
       if (messagesEndRef.current) {
+        //@ts-ignore
         messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
       }
   };
@@ -104,12 +106,15 @@ const SerialReader = () => {
     if (port) {
       try {
         // Check if reading is active and cancel if needed
+        //@ts-ignore
         if (port.readable && port.readable.locked) {
+          //@ts-ignore
           const reader = port.readable.getReader();
           reader.cancel(); // Release lock
         }
 
         // Close the port (potentially after releasing lock)
+        //@ts-ignore
         await port.close();
         setPort(null);
       } catch (error) {
@@ -121,27 +126,29 @@ const SerialReader = () => {
     }
   };
 
-  const handleBaudRateChange = (event) => {
+  const handleBaudRateChange = (event:any) => {
     setBaudRate(event.target.value);
   };
 
-  const handleMessageChange = (event) => {
+  const handleMessageChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setMessage(event.target.value);
   };
 
   const sendMessage = async () => {
     if (port && message) {
+      //@ts-ignore
       const writer = port.writable.getWriter();
       const encoder = new TextEncoder();
       const messageWithCR = message + "\r"; // Append carriage return to the message
       await writer.write(encoder.encode(messageWithCR));
       await writer.releaseLock();
       setMessage("");
+      //@ts-ignore
       inputRef.current.focus(); // Focus back on input field after sending message
     }
   };
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: { key: string; }) => {
       if (event.key === "Enter") {
         sendMessage();
       }
